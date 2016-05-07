@@ -16,9 +16,8 @@ public class StoreCommand extends HystrixCommand<Long> {
 
     @Override
     protected Long run() throws Exception {
-        Thread.sleep(1001);
         LOG.info("run()");
-        return null;
+        return new Long(666);
     }
 
 }

@@ -11,15 +11,22 @@ public class HystrixVerticle extends AbstractVerticle {
 
     @Override
     public void start() throws Exception {
-        LOG.info("BEFORE");
+        LOG.info("Blocking");
+        new ObservableStoreCommand().toObservable().subscribe(result -> {
+            LOG.info("StoreCommand().toObservable().subscribe: {}", result);
+        }, error -> {
+            LOG.error("StoreCommand().toObservable().subscribe: ", error);
+        });
+        LOG.info("AFTER Blocking");
+
+        LOG.info("Nonblocking");
         new StoreCommand().toObservable().subscribe(result -> {
             LOG.info("StoreCommand().toObservable().subscribe: {}", result);
         }, error -> {
             LOG.error("StoreCommand().toObservable().subscribe: ", error);
         });
-        LOG.info("AFTER");
+        LOG.info("AFTER Nonblocking");
+
     }
-    
-    
 
 }
